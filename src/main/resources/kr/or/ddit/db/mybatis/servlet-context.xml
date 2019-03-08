@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.3.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd">
+	
+	<!-- Controller 어노테이션을 처리 -->
+	<mvc:annotation-driven/>
+	
+	<!-- spring에서 처리하지 못하는 요청은 was(servlet-conteiner)에게 위임 -->
+	<mvc:default-servlet-handler/>
+	
+	<!-- jsp를 처리해줄 view resolver  : 후 순위-->
+	<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/WEB-INF/views/"/>
+		<property name="suffix" value=".jsp"/>
+	</bean>
+	
+	<!-- @Controller 스캔 -->
+	<context:annotation-config/>
+	
+	<!-- use-default-filters="true" 전체 어노테이션 스캔 --><!-- 전체검색 / true면 허용 -->
+	<!-- 기본 패키지에서 @Conponent, @Service, @Repository와 같은 스테레오어노테이션을 제외하고(use-default-filters="false") @Controller로 표현된 클래스만 빈으로 등록하겠다.는 의미 -->
+	<context:component-scan base-package="kr.or.ddit" use-default-filters="false">
+	
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice"/>
+<!-- 		<context:exclude-filter type="annotation" expression="org.springframework.stereotype.Component"/> -->
+	
+	</context:component-scan>
+
+</beans>
