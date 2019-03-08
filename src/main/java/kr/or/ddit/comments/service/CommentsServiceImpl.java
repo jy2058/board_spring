@@ -2,16 +2,21 @@ package kr.or.ddit.comments.service;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.stereotype.Service;
 
 import kr.or.ddit.comments.dao.CommentsDaoImpl;
 import kr.or.ddit.comments.dao.ICommentsDao;
 import kr.or.ddit.comments.model.CommentsVo;
 import kr.or.ddit.db.mybatis.MybatisSqlSessionFactory;
 
+@Service("commentsService")
 public class CommentsServiceImpl implements ICommentsService {
 
+	@Resource(name="commentsDao")
 	private ICommentsDao commentsDao;
 	
 	public CommentsServiceImpl() {

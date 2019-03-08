@@ -8,7 +8,9 @@ import kr.or.ddit.user.model.UserVo;
 import kr.or.ddit.util.model.PageVo;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
 
+@Repository("postDao")
 public class PostDaoImpl implements IPostDao {
 
 	@Override

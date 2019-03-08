@@ -3,7 +3,9 @@ package kr.or.ddit.user.dao;
 import kr.or.ddit.user.model.UserVo;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
 
+@Repository("userDao")
 public class UserDaoImpl implements IUserDao {
 	
 	/**

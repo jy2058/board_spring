@@ -1,44 +1,45 @@
 package kr.or.ddit.main;
 
-import java.io.IOException;
 import java.util.List;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import javax.annotation.Resource;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+
 import kr.or.ddit.board.model.BoardVo;
-import kr.or.ddit.board.service.BoardServiceImpl;
 import kr.or.ddit.board.service.IBoardService;
 import kr.or.ddit.user.model.UserVo;
 
-@WebServlet("/main")
-public class MainController extends HttpServlet {
-	private IBoardService boardService;
+//@Controller
+public class MainController{
 	
-	@Override
-	public void init() throws ServletException {
-		boardService = new BoardServiceImpl();
+	@Resource(name="boardService")
+	private IBoardService boardService;
+
+	//@RequestMapping("/main")
+	public String mainView(HttpSession session, Model model){
+		UserVo userVo = (UserVo) session.getAttribute("userVo");
+		List<BoardVo> boardList = boardService.getAllBoard();
+		
+		model.addAttribute("boardList", boardList);
+		
+		if(userVo == null){
+			return "login/login";
+		}else{
+			return "module/main";
+		}
 	}
 	
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		HttpSession session = request.getSession();
-		UserVo userVo = (UserVo) session.getAttribute("userVo");
-		
-		List<BoardVo> boardList = boardService.getAllBoard();
-		request.setAttribute("boardList", boardList);
-		
-		if (userVo == null) {
-			request.getRequestDispatcher("/login/login.jsp").forward(request, response);
-		} else {
-			request.getRequestDispatcher("/module/main.jsp").forward(request, response);
+	@RequestMapping(path="/main", method=RequestMethod.POST)
+		public String mainPost(){
+			return "module/main";
 		}
 	}
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+/*	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		doGet(request, response);
-	}
-}
+	}*/

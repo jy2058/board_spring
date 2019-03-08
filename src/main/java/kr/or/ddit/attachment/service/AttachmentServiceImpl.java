@@ -2,22 +2,23 @@ package kr.or.ddit.attachment.service;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.stereotype.Service;
 
 import kr.or.ddit.attachment.dao.AttachmentDaoImpl;
 import kr.or.ddit.attachment.dao.IAttachmentDao;
 import kr.or.ddit.attachment.model.AttachmentVo;
 import kr.or.ddit.db.mybatis.MybatisSqlSessionFactory;
 
+@Service("attachmentService")
 public class AttachmentServiceImpl implements IAttachmentService {
 
+	@Resource(name="attachmentDao")
 	private IAttachmentDao attachmentDao;
 	
-	public AttachmentServiceImpl() {
-		attachmentDao = new AttachmentDaoImpl();
-	}
-
 	@Override
 	public List<AttachmentVo> getAllFile(String post_num) {
 		SqlSessionFactory sqlSessionFactory = MybatisSqlSessionFactory.getSqlSessionFactory();

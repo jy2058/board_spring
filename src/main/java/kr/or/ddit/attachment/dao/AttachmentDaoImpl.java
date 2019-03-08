@@ -3,9 +3,11 @@ package kr.or.ddit.attachment.dao;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.attachment.model.AttachmentVo;
 
+@Repository("attachmentDao")
 public class AttachmentDaoImpl implements IAttachmentDao {
 
 	@Override

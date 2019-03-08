@@ -2,22 +2,23 @@ package kr.or.ddit.board.service;
 
 import java.util.List;
 
+import javax.annotation.Resource;
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.stereotype.Service;
 
 import kr.or.ddit.board.dao.BoardDaoImpl;
 import kr.or.ddit.board.dao.IBoardDao;
 import kr.or.ddit.board.model.BoardVo;
 import kr.or.ddit.db.mybatis.MybatisSqlSessionFactory;
 
+@Service("boardService")
 public class BoardServiceImpl implements IBoardService {
 	
+	@Resource(name="boardDao")
 	private IBoardDao boardDao;
 	
-	public BoardServiceImpl() {
-		boardDao = new BoardDaoImpl();
-	}
-
 	@Override
 	public List<BoardVo> getAllBoard() {
 		SqlSessionFactory sqlSessionFactory = MybatisSqlSessionFactory.getSqlSessionFactory();

@@ -4,8 +4,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.annotation.Resource;
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.stereotype.Service;
 
 import kr.or.ddit.db.mybatis.MybatisSqlSessionFactory;
 import kr.or.ddit.post.dao.IPostDao;
@@ -13,13 +16,12 @@ import kr.or.ddit.post.dao.PostDaoImpl;
 import kr.or.ddit.post.model.PostVo;
 import kr.or.ddit.util.model.PageVo;
 
+@Service("postService")
 public class PostServiceImpl implements IPostService {
 	
+	@Resource(name="postDao")
 	private IPostDao postDao;
 	
-	public PostServiceImpl() {
-		postDao = new PostDaoImpl();
-	}
 
 	@Override
 	public List<PostVo> getAllPost(String board_num) {

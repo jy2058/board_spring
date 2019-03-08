@@ -5,7 +5,9 @@ import java.util.List;
 import kr.or.ddit.board.model.BoardVo;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
 
+@Repository("boardDao")
 public class BoardDaoImpl implements IBoardDao {
 
 	@Override

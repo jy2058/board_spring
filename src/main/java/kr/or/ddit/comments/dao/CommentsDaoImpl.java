@@ -3,9 +3,11 @@ package kr.or.ddit.comments.dao;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
+import org.springframework.stereotype.Repository;
 
 import kr.or.ddit.comments.model.CommentsVo;
 
+@Repository("commentsDao")
 public class CommentsDaoImpl implements ICommentsDao {
 
 	@Override

@@ -5,15 +5,20 @@ import kr.or.ddit.user.dao.IUserDao;
 import kr.or.ddit.user.dao.UserDaoImpl;
 import kr.or.ddit.user.model.UserVo;
 
+import javax.annotation.Resource;
+
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
+import org.springframework.stereotype.Service;
 
+@Service("userService")
 public class UserServiceImpl implements IUserService {
-
+	
+	@Resource(name="userDao")
 	private IUserDao userDao;
 	
 	public UserServiceImpl() {
-		userDao = new UserDaoImpl();
+		//userDao = new UserDaoImpl();
 	}
 	
 	/**
