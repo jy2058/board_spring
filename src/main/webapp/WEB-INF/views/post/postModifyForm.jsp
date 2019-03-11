@@ -147,7 +147,7 @@
 			if (file_size >= 5) {
 				alert("첨부파일은 최대 5개까지 첨부 가능합니다.");
 			} else {
-				$("#fileUpload").append("<input type='file' class='form-control' name='file" + file_cnt + "' />");
+				$("#fileUpload").append("<input type='file' class='form-control' name='uploadFiles'/>");
 				file_size++;
 				file_cnt++;
 			}

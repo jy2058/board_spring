@@ -26,7 +26,7 @@ import kr.or.ddit.post.service.PostServiceImpl;
 import kr.or.ddit.user.model.UserVo;
 import kr.or.ddit.util.PartUtil;
 
-@WebServlet("/postReplyForm")
+//@WebServlet("/postReplyForm")
 @MultipartConfig(maxFileSize = 5 * 1024 * 1024, maxRequestSize = 5 * 5 * 1024 * 1024)
 public class PostReplyFormController extends HttpServlet {
 	private IPostService postService;
@@ -126,7 +126,7 @@ public class PostReplyFormController extends HttpServlet {
 					fileCnt += attachmentService.insertFile(attachmentVo);
 				}
 				
-				if (fileCnt == filenames.size()) {
+				if (fileCnt == filenames.size()) { 
 					response.sendRedirect(request.getContextPath() + "/boardPagingList?boardnum=" + board_num);
 				} else {
 					System.out.println("첨부파일 등록 오류");

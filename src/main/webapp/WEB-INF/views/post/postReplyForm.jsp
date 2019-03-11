@@ -53,7 +53,7 @@
 					<div class="form-group">
 						<label for="files" class="col-sm-2 control-label">첨부파일</label>
 						<div id="fileUpload" class="col-sm-7">
-							<input type="file" class="form-control" name="file1" />
+							<input type="file" class="form-control" name="uploadFiles" />
 						</div>
 						<div class="col-sm-1">
 							<button id="fileAddBtn" type="button" class="btn btn-default">추가</button>
@@ -139,7 +139,7 @@
 				alert("첨부파일은 최대 5개까지 첨부 가능합니다.");
 			} else {
 				file_cnt++;
-				$("#fileUpload").append("<input type='file' class='form-control' name='file" + file_cnt + "' />");
+				$("#fileUpload").append("<input type='file' class='form-control' name='uploadFiles' />");
 			}
 		});
 	</script>

@@ -33,8 +33,7 @@
 			</div>
 			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 				<h1 class="page-header">새 글 등록</h1>
-				<form id="frm" action="${pageContext.request.contextPath }/postForm" method="post"
-						class="form-horizontal" role="form" enctype="multipart/form-data">
+				<form id="frm" action="${pageContext.request.contextPath }/postForm" enctype="multipart/form-data" method="post" class="form-horizontal" role="form" >
 					<div class="form-group">
 						<label for="post_title" class="col-sm-2 control-label">제목</label>
 						<div class="col-sm-7">
@@ -53,7 +52,7 @@
 					<div class="form-group">
 						<label for="files" class="col-sm-2 control-label">첨부파일</label>
 						<div id="fileUpload" class="col-sm-7">
-							<input type="file" class="form-control" name="file1" />
+							<input type="file" class="form-control" name="uploadFiles" />
 						</div>
 						<div class="col-sm-1">
 							<button id="fileAddBtn" type="button" class="btn btn-default">추가</button>
@@ -137,7 +136,8 @@
 				alert("첨부파일은 최대 5개까지 첨부 가능합니다.");
 			} else {
 				file_cnt++;
-				$("#fileUpload").append("<input type='file' class='form-control' name='file" + file_cnt + "' />");
+// 				$("#fileUpload").append("<input type='file' class='form-control' name='file" + file_cnt + "' />");
+				$("#fileUpload").append("<input type='file' class='form-control' name='uploadFiles'/>");
 			}
 		});
 	</script>
