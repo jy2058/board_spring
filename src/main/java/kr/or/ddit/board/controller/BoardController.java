@@ -59,20 +59,8 @@ public class BoardController {
 	}
 	
 	@RequestMapping(path="/boardManage", method=RequestMethod.POST)
-	public String boardManagePost(HttpSession session, Model model, /*@RequestParam Map<String, String[]> map,*/ @RequestParam("info")String info, @RequestParam("board_name")String board_name, @RequestParam("sbUse")String use,
+	public String boardManagePost(HttpSession session, Model model, @RequestParam("info")String info, @RequestParam("board_name")String board_name, @RequestParam("sbUse")String use,
 			@RequestParam("updBoardNum")String updBoard_num, @RequestParam("updBoardName")String updBoard_name, @RequestParam("updBoardUse")String updUse){
-		
-//		List<BoardVo> boardList = boardService.getAllBoard();
-//		model.addAttribute("boardList", boardList);
-		
-		/*Iterator<String> itr = map.keySet().iterator();
-		while(itr.hasNext()){
-			String key = itr.next();
-			String[] values = map.get(key);
-			for(String value : values){
-				System.out.println(key + " : " + value);
-			}
-		}*/
 		
 		BoardVo boardVo = null;
 		System.out.println(info);
@@ -96,7 +84,6 @@ public class BoardController {
 	@RequestMapping("/boardPagingList")
 	public String boardPagingList(HttpSession session, Model model, PageVo pageVo, @RequestParam("boardnum")String board_num){
 		UserVo userVo = (UserVo) session.getAttribute("userVo");
-//		BoardVo boardVo = boardService.selectBoard(pageVo.getBoard_num());
 		BoardVo boardVo = boardService.selectBoard(board_num);
 		
 		// 페이징 리스트 구현

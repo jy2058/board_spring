@@ -15,7 +15,7 @@ import kr.or.ddit.attachment.model.AttachmentVo;
 import kr.or.ddit.attachment.service.AttachmentServiceImpl;
 import kr.or.ddit.attachment.service.IAttachmentService;
 
-@WebServlet("/fileDownload")
+//@WebServlet("/fileDownload")
 public class FileDownloadController extends HttpServlet {
 
 	private IAttachmentService attachmentService;

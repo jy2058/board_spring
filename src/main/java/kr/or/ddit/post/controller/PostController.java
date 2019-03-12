@@ -1,11 +1,17 @@
 package kr.or.ddit.post.controller;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
 import java.util.UUID;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.stereotype.Controller;
@@ -36,7 +42,7 @@ public class PostController {
 	
 	
 	@RequestMapping(path="/post", method=RequestMethod.GET)
-	public String board(@RequestParam("post_num")String post_num, HttpSession session, Model model /*@RequestParam("boardList")List<BoardVo>boardList*/){
+	public String board(@RequestParam("post_num")String post_num, HttpSession session, Model model ){
 		UserVo userVo = (UserVo) session.getAttribute("userVo");
 		PostVo postVo = postService.selectPost(post_num);
 		
@@ -48,7 +54,6 @@ public class PostController {
 		model.addAttribute("postVo", postVo);
 		model.addAttribute("fileList", fileList);
 		model.addAttribute("commentList", commentList);
-		//model.addAttribute("boardList", boardList);
 		
 		if(userVo == null){
 			return "login/login";
@@ -116,10 +121,8 @@ public class PostController {
 		List<MultipartFile> parts = Part.getFiles("uploadFiles");
 		model.addAttribute("boardnum", postVo.getBoard_num());
 		
-		String filename="";
-		String realFilename="";
 		
-		if (parts != null && parts.size() > 0) {
+/*		if (parts != null && parts.size() > 0) {
 			for(MultipartFile file : parts){
 				
 				filename = file.getOriginalFilename();
@@ -129,7 +132,7 @@ public class PostController {
 				
 				file.transferTo(new File(realFilename));
 			}
-		}
+		}*/
 		
 		if (userVo != null) {
 			PostVo tempPostVo = new PostVo();
@@ -148,6 +151,9 @@ public class PostController {
 				String post_num = tempPostVo.getPost_num();
 				// attachment : 정상 실행된 행 개수
 				int fileCnt = 0;
+				
+				String filename="";
+				String realFilename="";
 				
 				for (MultipartFile file : parts) {
 					filename = file.getOriginalFilename();
@@ -322,6 +328,55 @@ public class PostController {
 			return "redirect:/postReplyForm";
 		}
 		return "redirect:/boardPagingList";
+	}
+	
+	@RequestMapping("/fileDownload")
+	public String fileDownload(@RequestParam("file_num")String file_num, HttpServletRequest request, HttpServletResponse response) throws IOException{
+		
+		AttachmentVo attachmentVo = attachmentService.selectFile(file_num);
+	    String filename = attachmentVo.getFilename();
+	    String realfilename = attachmentVo.getRealfilename();
+	    
+	    File outputFile = new File(realfilename);
+	    
+	    // 파일을 읽어와 저장할 버퍼를 임시로 만들고 버퍼의 용량은 업로드할 수 있는 파일 크기로 지정한다.
+	    byte[] temp = new byte[1024 * 1024 * 5];
+
+	    FileInputStream fis = new FileInputStream(outputFile);
+	    
+	    // 유형 확인 : 읽어올 경로의 파일 유형 -> 페이지 생성할 때 타입을 설정해야 한다.
+	    String mimeType = request.getServletContext().getMimeType(realfilename);
+
+	    // 지정되지 않은 유형 예외처리
+	    if (mimeType == null){
+	    	mimeType = "application.octec-stream"; // 일련된 8bit 스트림 형식
+	    }
+	    
+	    // 파일 다운로드 시작
+	    response.setContentType(mimeType); // 유형 지정
+	    
+	    String encoding = new String(filename.getBytes("euc-kr"),"8859_1");
+	  
+	    String AA = "Content-Disposition";
+	    String BB = "attachment;filename="+ encoding;
+	    response.setHeader(AA,BB);
+	     
+	    // 브라우저에 쓰기
+	    ServletOutputStream sos = response.getOutputStream();
+	     
+	    int numRead = 0;
+	    while((numRead = fis.read(temp,0,temp.length)) != -1){
+	    	// 브라우저에 출력
+	    	sos.write(temp,0,numRead);
+	    }
+	    
+	    // 자원 해제
+	    sos.flush();
+	    sos.close();
+	    fis.close();
+		
+		return "redirect:/post";
+		
 	}
 	
 	
